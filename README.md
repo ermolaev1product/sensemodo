@@ -10,7 +10,7 @@ Service positioning and offer selection; browser-based project brief; localized 
 
 ## About this project
 
-A product project by **Ilya Ermolayev**, developed with AI-assisted implementation. This repository presents the product and its implementation for portfolio review. It is a snapshot of an actively evolving product, not a claim that every production integration can run without configuration.
+A product project by **Ilya Ermolayev**, developed with AI-assisted implementation. This repository presents the product and its implementation for portfolio review. It is a source snapshot of an actively evolving product. Production integrations require environment-specific configuration.
 
 ## Technology
 
@@ -18,7 +18,7 @@ HTML/CSS, JavaScript, React/TypeScript hosting layer, Vinext/Vite, Cloudflare Wo
 
 ## Run locally
 
-Use Node.js 22.13 or newer. PlayTrickle's content checks also require Python 3.
+Use Node.js 22.13 or newer.
 
 ```sh
 node dev-server.cjs
