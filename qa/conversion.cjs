@@ -1,0 +1,30 @@
+const { JSDOM, VirtualConsole } = require(process.env.JSDOM_PATH || 'jsdom');
+const fs=require('node:fs'),assert=require('node:assert/strict');
+const html=fs.readFileSync('out/index.html','utf8');
+(async()=>{const report=[];
+for(const lang of ['ru','en','sr','es']){
+ const errors=[],requests=[]; const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
+ const dom=new JSDOM(html,{url:'https://example.test/?lang='+lang,runScripts:'outside-only',pretendToBeVisual:true,virtualConsole:vc});const w=dom.window,d=w.document; const $=s=>d.querySelector(s);
+ w.matchMedia=()=>({matches:true,addEventListener(){}});w.ResizeObserver=class{observe(){}};w.IntersectionObserver=class{observe(){}};w.requestAnimationFrame=()=>0;
+ w.HTMLCanvasElement.prototype.getContext=()=>new Proxy({createRadialGradient:()=>({addColorStop(){}})},{get:(o,k)=>o[k]||(()=>{})});
+ w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new w.Event('close'));};
+ let response={ok:true,json:async()=>({success:true})};w.fetch=async(url,opts)=>{requests.push({url,opts});if(response instanceof Error)throw response;return response;};w.AbortController=AbortController;
+ for(const file of ['content.js','contact-config.js','app.js'])w.eval(fs.readFileSync('out/'+file,'utf8'));
+ assert.equal(d.documentElement.lang,lang==='sr'?'sr-Latn':lang);assert.equal(d.querySelectorAll('[data-open-contact]').length,7);
+ for(const section of ['header','.hero','#capabilities','.lab-section','#work','#about','#contact'])assert.ok($(section+' [data-open-contact]'),section);
+ for(const b of d.querySelectorAll('[data-open-contact]')){
+  b.focus();b.click();assert.equal($('#contact-dialog').open,true);assert.equal($('#booking-dialog'),null);assert.equal(d.activeElement,$('.dialog-close'));assert.ok(d.body.classList.contains('modal-open'));assert.equal(w.location.hash,'');
+  $('#contact-message').value='QA draft preserved';$('[data-close-contact]').click();assert.equal($('#contact-dialog').open,false);assert.equal(d.activeElement,b);assert.ok(!d.body.classList.contains('modal-open'));b.click();assert.equal($('#contact-message').value,'QA draft preserved');$('[data-close-contact]').click();
+ }
+ assert.equal(requests.length,0,'Opening form must not transmit');assert.equal($('#contact-company').getAttribute('autocomplete'),'off');assert.equal($('#contact-company').value,'');
+ $('[data-open-contact]').click();$('#contact-form').dispatchEvent(new w.Event('submit',{cancelable:true}));await new Promise(setImmediate);assert.equal(requests.length,0,'Required fields prevent sending');
+ $('#contact-name').value='QA local only';$('#contact-email').value='qa@example.test';$('#contact-message').value='  ';$('#contact-consent').checked=true;
+ $('#contact-form').dispatchEvent(new w.Event('submit',{cancelable:true}));await new Promise(setImmediate);assert.equal(requests.length,0,'Whitespace message rejected');
+ $('#contact-message').value='Local mocked test only';response=new Error('Simulated offline');$('#contact-form').dispatchEvent(new w.Event('submit',{cancelable:true}));await new Promise(setImmediate);assert.equal($('#form-status').dataset.state,'error');assert.equal($('#contact-form').hidden,false);assert.equal($('#contact-success').hidden,true);assert.equal($('#contact-message').value,'Local mocked test only');assert.equal($('#contact-submit').disabled,false);
+ response={ok:false,json:async()=>({success:false,message:'Please activate this form'})};$('#contact-form').dispatchEvent(new w.Event('submit',{cancelable:true}));await new Promise(setImmediate);assert.equal($('#form-status').dataset.state,'pending');assert.equal($('#contact-form').hidden,false);assert.equal($('#contact-success').hidden,true);assert.equal($('#contact-message').value,'Local mocked test only');response={ok:true,json:async()=>({success:true})};$('#contact-form').dispatchEvent(new w.Event('submit',{cancelable:true}));await new Promise(setImmediate);assert.equal($('#form-status').dataset.state,'success');assert.equal($('#contact-form').hidden,true);assert.equal($('#form-title').hidden,true);assert.equal($('#form-intro').hidden,true);assert.equal($('#contact-success').hidden,false);assert.equal(d.activeElement,$('#contact-success-title'));assert.equal($('#contact-dialog').getAttribute('aria-labelledby'),'contact-success-title');assert.ok($('#contact-success-message').textContent.length>20);assert.equal($('#contact-message').value,'');assert.equal($('#contact-submit').disabled,false);assert.equal(requests.length,3);
+ assert.equal(requests[0].url,w.contactDelivery.endpoint);assert.equal(JSON.parse(requests[0].opts.body).language,lang);
+ $('[data-close-contact]').click();$('[data-open-contact]').click();assert.equal($('#contact-form').hidden,false);assert.equal($('#contact-success').hidden,true);assert.equal($('#contact-name').value,'');assert.equal($('#contact-dialog').getAttribute('aria-labelledby'),'form-title');$('[data-close-contact]').click();$('[data-lang="'+(lang==='ru'?'en':'ru')+'"]').click();assert.ok(!Array.from(d.querySelectorAll('[data-t]')).some(e=>!e.textContent||e.textContent==='undefined'));assert.equal(d.querySelectorAll('[data-open-contact]').length,7);
+ const groups=[...d.querySelectorAll('.ticker-group')];assert.equal(groups.length,2);assert.equal(groups[0].innerHTML,groups[1].innerHTML);assert.equal(groups[1].getAttribute('aria-hidden'),'true');assert.deepEqual([...groups[0].querySelectorAll('.ticker-word')].map(x=>x.textContent),['PRODUCT','GROWTH','AI','SYSTEMS','EXPERIMENTS']);assert.equal(d.querySelectorAll('[data-open-booking]').length,0,'Do not publish held scheduler changes');assert.deepEqual(errors,[]);
+ report.push({language:lang,directEntryPoints:7,openCloseReopenFocus:'pass',validation:'pass',mockedFailureRecovery:'pass',mockedSuccess:'pass',translations:'pass',externalRequests:0});dom.window.close();
+}
+console.log(JSON.stringify({passed:true,note:'JSDOM: native dialog/canvas and network responses mocked. No external request or actual enquiry sent. Not a visual browser test.',checks:report},null,2));})();

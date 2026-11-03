@@ -1,0 +1,202 @@
+{
+  "engine": "156.0.8078.47",
+  "externalRequestsSent": 0,
+  "checks": [
+    {
+      "lang": "en",
+      "scenario": "accepted",
+      "postsIntercepted": 1,
+      "status": "success",
+      "passed": true
+    },
+    {
+      "lang": "en",
+      "scenario": "rejected",
+      "postsIntercepted": 1,
+      "status": "error",
+      "passed": true
+    },
+    {
+      "lang": "en",
+      "scenario": "activation",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "en",
+      "scenario": "network",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "en",
+      "scenario": "invalid",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "en",
+      "scenario": "timeout",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "en",
+      "scenario": "delayed",
+      "postsIntercepted": 1,
+      "status": "success",
+      "passed": true
+    },
+    {
+      "lang": "ru",
+      "scenario": "accepted",
+      "postsIntercepted": 1,
+      "status": "success",
+      "passed": true
+    },
+    {
+      "lang": "ru",
+      "scenario": "rejected",
+      "postsIntercepted": 1,
+      "status": "error",
+      "passed": true
+    },
+    {
+      "lang": "ru",
+      "scenario": "activation",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "ru",
+      "scenario": "network",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "ru",
+      "scenario": "invalid",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "ru",
+      "scenario": "timeout",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "ru",
+      "scenario": "delayed",
+      "postsIntercepted": 1,
+      "status": "success",
+      "passed": true
+    },
+    {
+      "lang": "sr",
+      "scenario": "accepted",
+      "postsIntercepted": 1,
+      "status": "success",
+      "passed": true
+    },
+    {
+      "lang": "sr",
+      "scenario": "rejected",
+      "postsIntercepted": 1,
+      "status": "error",
+      "passed": true
+    },
+    {
+      "lang": "sr",
+      "scenario": "activation",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "sr",
+      "scenario": "network",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "sr",
+      "scenario": "invalid",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "sr",
+      "scenario": "timeout",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "sr",
+      "scenario": "delayed",
+      "postsIntercepted": 1,
+      "status": "success",
+      "passed": true
+    },
+    {
+      "lang": "es",
+      "scenario": "accepted",
+      "postsIntercepted": 1,
+      "status": "success",
+      "passed": true
+    },
+    {
+      "lang": "es",
+      "scenario": "rejected",
+      "postsIntercepted": 1,
+      "status": "error",
+      "passed": true
+    },
+    {
+      "lang": "es",
+      "scenario": "activation",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "es",
+      "scenario": "network",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "es",
+      "scenario": "invalid",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "es",
+      "scenario": "timeout",
+      "postsIntercepted": 1,
+      "status": "pending",
+      "passed": true
+    },
+    {
+      "lang": "es",
+      "scenario": "delayed",
+      "postsIntercepted": 1,
+      "status": "success",
+      "passed": true
+    }
+  ]
+}

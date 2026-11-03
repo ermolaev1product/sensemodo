@@ -1,0 +1,58 @@
+[
+  {
+    "lang": "en",
+    "width": 390,
+    "passed": true,
+    "postsIntercepted": 1,
+    "externalRequestsSent": 0
+  },
+  {
+    "lang": "en",
+    "width": 1440,
+    "passed": true,
+    "postsIntercepted": 1,
+    "externalRequestsSent": 0
+  },
+  {
+    "lang": "ru",
+    "width": 390,
+    "passed": true,
+    "postsIntercepted": 1,
+    "externalRequestsSent": 0
+  },
+  {
+    "lang": "ru",
+    "width": 1440,
+    "passed": true,
+    "postsIntercepted": 1,
+    "externalRequestsSent": 0
+  },
+  {
+    "lang": "sr",
+    "width": 390,
+    "passed": true,
+    "postsIntercepted": 1,
+    "externalRequestsSent": 0
+  },
+  {
+    "lang": "sr",
+    "width": 1440,
+    "passed": true,
+    "postsIntercepted": 1,
+    "externalRequestsSent": 0
+  },
+  {
+    "lang": "es",
+    "width": 390,
+    "passed": true,
+    "postsIntercepted": 1,
+    "externalRequestsSent": 0
+  },
+  {
+    "lang": "es",
+    "width": 1440,
+    "passed": true,
+    "postsIntercepted": 1,
+    "externalRequestsSent": 0
+  }
+]
